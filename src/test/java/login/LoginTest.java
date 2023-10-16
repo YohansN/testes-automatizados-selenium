@@ -54,4 +54,15 @@ public class LoginTest {
         String errorMessage = "Usuário e senha inválidos.";
         Assertions.assertTrue(browser.getPageSource().contains(errorMessage));
     }
+
+    @Test
+    public void naoDeveriaAcessarPaginaRestritaDeslogado(){
+        //Set
+        String blockedUrl = "http://localhost:8080/leiloes/2";
+        this.browser.navigate().to(blockedUrl);
+
+        //Action
+        Assertions.assertNotEquals(browser.getCurrentUrl(), blockedUrl);
+        Assertions.assertTrue(browser.getCurrentUrl().equals(LOGIN_URL));
+    }
 }
