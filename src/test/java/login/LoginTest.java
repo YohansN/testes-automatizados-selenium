@@ -1,18 +1,19 @@
 package login;
 
+import driverConfig.DriverConfiguration;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.opera.OperaDriver;
 
-public class LoginTest {
+public class LoginTest extends DriverConfiguration {
 
     private LoginPage loginPage;
 
     @BeforeEach
     public void beforeEach(){
-        loginPage = new LoginPage();
+        loginPage = new LoginPage(browser);
         loginPage.navegarParaPaginaLogin();
     }
 

@@ -15,10 +15,8 @@ public class LoginPage {
     private static final String USERNAME_INVALID = "pass";
     private static final String PASSWORD_INVALID = "123";
 
-    public LoginPage(){
-        System.setProperty("webdriver.opera.driver", "drivers/operadriver.exe");
-        this.browser = new OperaDriver();
-
+    public LoginPage(WebDriver browser){
+        this.browser = browser;
     }
 
     public void navegarParaPaginaLogin(){
@@ -60,6 +58,4 @@ public class LoginPage {
     public void navegaParaPaginaDeLances(){
         browser.navigate().to("http://localhost:8080/leiloes/2");
     }
-
-
 }
