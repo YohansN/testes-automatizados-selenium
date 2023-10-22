@@ -8,10 +8,6 @@ import org.openqa.selenium.opera.OperaDriver;
 public class LeiloesPage {
     private WebDriver browser;
     private static final String CADASTRO_LEILAO_PAGE_URL = "http://localhost:8080/leiloes/new";
-    //Massa de Dados
-    private static final String NOME_VALIDO = "Fernando Pessoa";
-    private static final Double VALORI_INICIAL_VALIDO = 100.0;
-    private static final String DATA_ABERTURA_VALIDA = "01/10/2023";
 
     public LeiloesPage(WebDriver browser){
         this.browser = browser;
@@ -24,21 +20,35 @@ public class LeiloesPage {
         browser.quit();
     }
 
-    public void preencheFormularioValido(){
-        browser.findElement(By.id("nome")).sendKeys(NOME_VALIDO);
-        browser.findElement(By.id("valorInicial")).sendKeys(VALORI_INICIAL_VALIDO.toString());
-        browser.findElement(By.id("dataAbertura")).sendKeys(DATA_ABERTURA_VALIDA);
+    public void cadastrarLeilao(String nome, Double valor, String data){
+        browser.findElement(By.id("nome")).sendKeys(nome);
+        browser.findElement(By.id("valorInicial")).sendKeys(valor.toString());
+        browser.findElement(By.id("dataAbertura")).sendKeys(data);
+        browser.findElement(By.className("card-body")).submit();
     }
 
-    public void preencheFormularioInvalido(){
-
+    public boolean isLeiloesPage(){
+        return browser.getCurrentUrl().equals("http://localhost:8080/leiloes");
     }
 
-    public void submeteFormulario(){
-        browser.findElement(By.tagName("form")).submit();
+    public boolean isNewLeilao(String nome, Double valor, String data){
+        String svalor = valor.toString();
+        return browser.getPageSource().contains(nome) && browser.getPageSource().contains(svalor) && browser.getPageSource().contains(data);
     }
 
-    //public boolean isLeiloesPage(){
-        //return browser.getCurrentUrl().equals();
-    //}
+    public boolean isNomeWarningsOnPage(){
+        String nomeWarning1 = "minimo 3 caracteres";
+        String nomeWarning2 = "não deve estar em branco";
+        return browser.getPageSource().contains(nomeWarning1) || browser.getPageSource().contains(nomeWarning2);
+    }
+
+    public boolean isValorWarningOnPage(){
+        String valorWarning = "deve ser um valor maior de 0.1";
+        return browser.getPageSource().contains(valorWarning);
+    }
+
+    public boolean isDataWarningOnPage(){
+        String dataWarning = "deve ser uma data no formato dd/MM/yyyy";
+        return browser.getPageSource().contains(dataWarning);
+    }
 }
