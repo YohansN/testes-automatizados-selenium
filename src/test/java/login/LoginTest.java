@@ -17,11 +17,6 @@ public class LoginTest extends DriverConfiguration {
         loginPage.navegarParaPaginaLogin();
     }
 
-    @AfterEach
-    public void quitLoginTest(){
-        loginPage.fecharPagina();
-    }
-
     @Test
     public void deveriaEfetuarLoginComDadosValidos(){
         //Action
